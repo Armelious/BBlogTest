@@ -18,18 +18,18 @@ public class Hooks {
 
 	private WebDriver driver;
 
-	public Hooks(WebDriver driver) {
-		this.driver = driver;
-	}
+	//private Logger logger;
+
 
 	@BeforeClass
 	public static void setupClass() {
 		WebDriverManager.chromedriver().setup();
+		//logger = LoggerFactory.getLogger();
 	}
 
 	@Before
 	public void beforeScenario(Scenario scenario) {
-		Logger.getAnonymousLogger().log(Level.INFO, "Starting first step of scenario '"+scenario.getName()+"'...");
+		//Logger.getAnonymousLogger().log(Level.INFO, "Starting first step of scenario '"+scenario.getName()+"'...");
 		driver = new ChromeDriver();
 	}
 	
@@ -41,7 +41,7 @@ public class Hooks {
 		if (driver != null) {
 			driver.quit();
 		}
-		Logger.getAnonymousLogger().log(Level.INFO, "Last step of scenario '"+scenario.getName()+"' finished");
+		//Logger.getAnonymousLogger().log(Level.INFO, "Last step of scenario '"+scenario.getName()+"' finished");
 	}
 
 	private void embedScreenshotIntoReport(Scenario scenario) {

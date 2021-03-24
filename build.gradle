@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+}
+
+group 'com.github.armelious.bblogtest'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--tags', 'not @ignore',
+                    '--plugin', 'html:build/reports/cucumber/cucumber-html-report.html',
+                    '--plugin', 'pretty']
+        }
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // Selenium
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.141.59'
+    
+    // Cucumber
+    testImplementation 'io.cucumber:cucumber-java:6.7.0'
+    testImplementation 'io.cucumber:cucumber-junit:6.7.0'
+    testImplementation 'io.cucumber:cucumber-picocontainer:6.7.0'
+
+    testImplementation("io.github.bonigarcia:webdrivermanager:4.3.1")
+}
+
