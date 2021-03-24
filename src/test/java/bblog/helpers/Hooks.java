@@ -1,8 +1,9 @@
-package bblog;
+package bblog.helpers;
 
 
-import org.junit.After;
-import org.junit.Before;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import org.junit.BeforeClass;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -11,6 +12,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,19 +20,28 @@ public class Hooks {
 
 	private WebDriver driver;
 
+	public WebDriver getDriver() {
+		return driver;
+	}
+
 	//private Logger logger;
 
 
+	/*
 	@BeforeClass
 	public static void setupClass() {
 		WebDriverManager.chromedriver().setup();
 		//logger = LoggerFactory.getLogger();
 	}
 
+	 */
+
 	@Before
 	public void beforeScenario(Scenario scenario) {
 		//Logger.getAnonymousLogger().log(Level.INFO, "Starting first step of scenario '"+scenario.getName()+"'...");
+		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	@After

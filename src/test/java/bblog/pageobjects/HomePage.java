@@ -1,22 +1,26 @@
 package bblog.pageobjects;
 
-import bblog.WebDriverWrapper;
+import bblog.helpers.WebDriverHelper;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
 public class HomePage {
+	private WebDriverHelper driverHelper;
 	private WebDriver driver;
 
 	private String HOME_URL = "https://candidatex:qa-is-cool@qa-task.backbasecloud.com/#/";
-	
+
 	private By usernameBy = By.xpath("//input[@placeholder='Username']");
 	private By passwordBy = By.xpath("//input[@placeholder='Password']");
 	private By signInBy = By.xpath("//button[@type='submit' and contains(text(),\"Sign in\")]");
 
-	public HomePage(WebDriverWrapper wrapper) {
-		this.driver = wrapper.getDriver();
+
+	public HomePage(WebDriverHelper driverHelper) {
+		//this.driver = wrapper.getDriver();
+		this.driverHelper = driverHelper;
+		this.driver = driverHelper.getDriver();
 	}
 	
 	public HomePage navigateTo(String url) {
@@ -42,7 +46,8 @@ public class HomePage {
 	}
 
 	public void clickSignIn() {
-		driver.findElement(signInBy).click();
+		driverHelper.waitAndClickElement(signInBy);
+		//driver.findElement(signInBy).click();
 	}
 
 	public void verifyHomePage() {
