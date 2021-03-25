@@ -1,35 +1,31 @@
 package bblog.helpers;
 
-import com.sun.webkit.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
-
-import java.time.Instant;
-
 public class WebDriverHelper {
 
-    WebDriver driver;
-
-    WebDriverWait wait;
+    private WebDriver driver;
+    private WebDriverWait wait;
 
     public WebDriverHelper(Hooks hooks) {
         driver = hooks.getDriver();
-        wait = new WebDriverWait(driver,30);
+        wait = new WebDriverWait(driver,10);
     }
 
     public WebDriver getDriver() {
         return driver;
     }
 
-    public void waitAndClickElement(By locator)
-    {
+    /**
+     * Wait for an element to be clickable before clicking
+     * @param locator WebElement By locator
+     */
+    public void clickElement(By locator) {
         try
         {
-            this.wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-            waitForLinkToGoStale(locator);
+            wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
         }
         catch (TimeoutException e)
         {
@@ -37,7 +33,20 @@ public class WebDriverHelper {
         }
     }
 
-    public void waitForLinkToGoStale(By locator) {
-        wait.until(ExpectedConditions.stalenessOf(driver.findElement(locator)));
+    /**
+     * Wait for an element to be clickable before clicking.
+     * Then wait for page to load by element becoming stale.
+     * @param locator WebElement By locator
+     */
+    public void clickElementAndWait(By locator) {
+        clickElement(locator);
+        try {
+            wait.until(ExpectedConditions.stalenessOf(driver.findElement(locator)));
+        }
+        catch (TimeoutException e)
+        {
+            System.out.println("Page did not change <" + locator.toString() + ">");
+        }
+
     }
 }

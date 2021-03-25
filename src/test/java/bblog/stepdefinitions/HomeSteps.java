@@ -1,15 +1,15 @@
-package bblog;
+package bblog.stepdefinitions;
 
 import bblog.pageobjects.HomePage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class stepsDefinitions {
+public class HomeSteps {
 
     private HomePage homePage;
 
-    public stepsDefinitions(HomePage homePage) {
+    public HomeSteps(HomePage homePage) {
         this.homePage = homePage;
     }
 
@@ -47,8 +47,29 @@ public class stepsDefinitions {
         homePage.clickSignIn();
     }
 
+    @When("I click my Username")
+    public void i_click_my_username() {
+        homePage.clickUserName();
+    }
+
+    @When("I click {string}")
+    public void i_click_element(String linkText) {
+        homePage.clickElement(linkText);
+    }
+
+    @When("I click the {string} link")
+    public void i_click_link(String linkText) {
+        homePage.clickLinkText(linkText);
+    }
+
     @Then("I expect to be navigated to the Home Page")
     public void i_expect_to_be_navigated_to_the_home_page() {
         homePage.verifyHomePage();
     }
+
+    @When("I click the header of the {int}(st|nd|rd|th) Article")
+    public void i_click_nth_article_header(int article) {
+        homePage.clickNthArticleHeader(article);
+    }
+
 }
