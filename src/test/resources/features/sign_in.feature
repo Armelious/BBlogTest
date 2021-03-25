@@ -13,4 +13,3 @@ Feature: Sign In to BBlog
     And I enter my Password
     And I click Sign in
     Then I expect to be navigated to the Home Page
-    
