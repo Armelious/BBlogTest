@@ -14,7 +14,7 @@ public class HomePage {
 	// todo keep these in an encrypted property file
 	private String USERNAME = "adamstester";
 	private String EMAIL = "awschultz21@gmail.com";
-	private String PASS = "@utoT3ster"; //not my real password
+	private String PASS = "@utoT3ster"; //not my real password ;)
 
 	private By usernameBy = By.xpath("//input[@placeholder='Username']");
 	private By passwordBy = By.xpath("//input[@placeholder='Password']");

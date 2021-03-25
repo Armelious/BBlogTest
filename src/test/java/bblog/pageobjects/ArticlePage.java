@@ -56,6 +56,10 @@ public class ArticlePage {
         driverHelper.clickElement(postCommentButtonBy);
     }
 
+    /**
+     * Verify that a comment containing expected comment text exists.
+     * @param commentText String expected comment text
+     */
     public void verifyCommentExists(String commentText) {
         By commentTextBy = By.xpath("//app-article-comment//p[contains(text(),\"" + commentText + "\")]");
         Assert.assertTrue(driver.findElement(commentTextBy).isDisplayed());
